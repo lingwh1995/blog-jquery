@@ -1,0 +1,25 @@
+git:
+  uri:
+    github: https://github.com/lingwh1995/blog.git
+    gitee: https://github.com/lingwh1995/blog.git1111
+  token:
+    github:
+      username: access for gitee
+      password: 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
+    gitee:
+      username:
+      password:
+  branch:
+    github:
+      master: master
+      pages: gh-pages
+    gitee:
+      master: master
+      pages: gh-pages11
+  htmlFilesLocation:
+    github:
+      master: src/main/resources/repository/master/notes/
+      pages: src/main/resources/repository/gh-pages/notes
+    gitee:
+      master: src/main/resources/repository/master/notes/
+      pages: src/main/resources/repository/gh-pages/notes
