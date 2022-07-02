@@ -3,73 +3,71 @@
     <!--导入jquery-->
     <script type="text/javascript" src='source/lib/jquery-3.1.1.js'></script>
     <!--导入bootstrap的css-->
-    <link rel="stylesheet" href="./source/lib/bootstrap-4.6.1/css/bootstrap.css" />
+    <link rel="stylesheet" href="./source/lib/bootstrap-4.6.1/css/bootstrap.css"/>
     <!--导入bootstrap的js-->
-    <script type="text/javascript" src="./source/lib/bootstrap-4.6.1/js/bootstrap.js" ></script>
+    <script type="text/javascript" src="./source/lib/bootstrap-4.6.1/js/bootstrap.js"></script>
     <link rel="stylesheet" type="text/css" href="./source/static/css/index.css">
     <!--导入ztree的css-->
     <link rel="stylesheet" type="text/css" href="source/lib/ztree.-3.5/css/zTreeStyle/zTreeStyle.css">
     <!--导入ztree的js-->
-    <script type="text/javascript" src="source/lib/ztree.-3.5/js/jquery.ztree.all-3.5.js" ></script>
-
+    <script type="text/javascript" src="source/lib/ztree.-3.5/js/jquery.ztree.all-3.5.js"></script>
+    <title>BLOG_LINGWH</title>
     <script>
-        $(function (){
+        $(function () {
             var config = {
-                navbar1:{
+                navbar1: {
                     item_home: {
-                        name:'Home',
-                        href:'#asfda',
-                        collapseId:'collapse_item_home'
+                        name: 'Home',
+                        href: '#asfda',
+                        collapseId: 'collapse_item_home'
                     },
                     item_java: {
-                        name:'JAVA',
-                        collapseId:'collapse_item_java',
+                        name: 'JAVA',
+                        collapseId: 'collapse_item_java',
                         navbar2: {
-                            item_java_javase: {
-                                name:'JAVASE',
-                                href:'#JAVASEasdfadfasfasdf',
+                            item_java_spring: {
+                                name: 'Spring',
+                                href: '#',
                             },
                             item_java_springcloud: {
-                                name:'SpringCloud',
-                                href:'#JAVASE',
+                                name: 'SpringCloud',
+                                href: '#',
                             },
                             item_java_springboot: {
-                                name:'SpringBoot',
-                                href:'#springboot',
+                                name: 'SpringBoot',
+                                href: '#',
                             }
                         }
                     },
                     item_database: {
-                        name:'数据库',
-                        collapseId:'collapse_item_database',
+                        name: '数据库',
+                        collapseId: 'collapse_item_database',
                         navbar2: {
                             item_database_mysql: {
-                                name:'Mysql',
-                                href:'#',
-                                content_data_path:'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/notes/mysql.html',
-                                nav_data_path:'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/source/db/mysql.json'
+                                name: 'Mysql',
+                                href: '#',
+                                content_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/notes/mysql.html',
+                                nav_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/source/db/mysql.json'
                             },
                             item_database_oracel: {
-                                name:'Oracle',
-                                href:'#oracel',
-                            },
-                            item_database_redis: {
-                                name:'redis',
-                                href:'#redis',
+                                name: 'Oracle',
+                                href: '#',
+                                content_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/notes/oracle.html',
+                                nav_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/source/db/oracle.json'
                             }
                         }
                     },
                     item_tools: {
-                        name:'工具软件',
-                        collapseId:'collapse_item_tools',
+                        name: '工具支持',
+                        collapseId: 'collapse_item_tools',
                         navbar2: {
                             item_tools_idea: {
-                                name:'idea',
-                                href:'#idea',
+                                name: 'idea',
+                                href: '#',
                             },
                             item_tool_eclipse: {
-                                name:'idea',
-                                href:'#idea',
+                                name: 'eclipse',
+                                href: '#',
                             }
                         }
                     }
@@ -77,10 +75,11 @@
             };
 
             renderNavbar();
+
             //渲染一级、二级...导航栏样式
-            function renderNavbar(){
+            function renderNavbar() {
                 const navbar1 = config.navbar1;
-                for(const key_navbar1 in navbar1){
+                for (const key_navbar1 in navbar1) {
                     let li =
                         `<li class="nav-item">
                                     <a class="nav-link ${key_navbar1}" data-toggle="collapse" href="#${navbar1[key_navbar1].collapseId}">
@@ -89,9 +88,9 @@
                                  </li>`;
                     $(".header .navbar-first-level ul").append(li);
                     const navbar2 = navbar1[key_navbar1].navbar2;
-                    if(navbar2 != undefined) {
+                    if (navbar2 !== undefined) {
                         let navbar2lis = '';
-                        for(const key_navbar2 in navbar2){
+                        for (const key_navbar2 in navbar2) {
                             navbar2lis += `<li className="nav-item">
                                          <a class="nav-link" nav_data_path="${navbar2[key_navbar2].nav_data_path}" content_data_path="${navbar2[key_navbar2].content_data_path}" href="${navbar2[key_navbar2].href}">${navbar2[key_navbar2].name}</a>
                                        </li>`;
@@ -113,8 +112,9 @@
                 }
                 $(".header .navbar-first-level ul li a").eq(0).addClass('active');
             }
+
             //给一级、二级...导航栏添加初始点击事件
-            $('.header .navbar-first-level ul li a').click(function (){
+            $('.header .navbar-first-level ul li a').click(function () {
                 const collapseId = $(this).attr('href');
                 $(collapseId).siblings().removeClass('show');
             });
@@ -122,67 +122,83 @@
             //给homePageButton添加超链接
             //$homePageButton.attr('href',config.navbar.first_level.item_home.href);
 
-            // $('.header').on('click','.collapse-dev div ul li a',function (){
-            //     render();
-            //     $("#txt-right").load("https://raw.githubusercontent.com/lingwh1995/test/gh-pages/mysql.html");
-            // })
             //二级导航条点击事件
-            $('.header .collapse-div div ul li a').click(function (){
+            $('.header .collapse-div div ul li a').click(function () {
                 const content_data_path = $(this).attr('content_data_path');
                 $("#txt-right").load(content_data_path);
                 const nav_data_path = $(this).attr('nav_data_path');
-                var setting = {};
+                //var setting = {};
+                var setting = {
+                    callback: {
+                        onClick: zTreeOnClick
+                    }
+                };
+
                 $.ajax({
                     async: false,
                     url: nav_data_path,
                     type: 'GET',
                     global: false,
                     dataType: 'json',
-                    success: function (result){
+                    success: function (result) {
                         var zNodes = result;
                         $.fn.zTree.init($("#ztree-left"), setting, zNodes);
                     }
                 })
             });
 
-            function render(){
-                // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
-
+            function zTreeOnClick(event, treeId, treeNode, clickFlag){
+                const anchorPoint =treeNode.navMenuItemId;
+                //锚点跳跃
+                location.hash = anchorPoint;
+                alert($('#'+anchorPoint).html());
+                console.log(treeNode.navMenuItemId);
+                //var treeObj = $.fn.zTree.getZTreeObj("ztree");
+                //console.log(treeObj);
+                // 获取当前勾选数据的值
+                //var checkNodes = treeObj.getCheckedNodes(true);
+                // 获取当前选中数据的值
+                // var nodes = treeObj.getSelectedNodes();
+                // for (var i=0; i < nodes.length; i++) {
+                //     if(checkNodes.length > 0 && nodes.length > 0 && nodes[i].id == checkNodes[i].id){
+                //         treeObj.checkNode(nodes[i], false, true);//取消勾选
+                //     }else{
+                //         treeObj.checkNode(nodes[i], true, true);//勾选
+                //     }
+                // }
             }
 
-            //
-            //$("#content").load("./notes/mysql.html");
         });
     </script>
 
 </head>
 <body>
-
-<div class="container-fluid">
-    <div class="header">
-        <div class="navbar navbar-expand-lg navbar-dark bg-primary navbar-first-level">
-            <a class="navbar-brand" href="#">博客</a>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav mr-auto"></ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
+    <div class="container-fluid">
+        <div class="header">
+            <div class="navbar navbar-expand-lg navbar-dark bg-primary navbar-first-level">
+                <a class="navbar-brand" href="#">博客</a>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-auto"></ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+            <div class="collapse-div">
             </div>
         </div>
-        <div class="collapse-div">
-    </div>
-    <div class="body">
-        <div class="row">
-            <div class="col-3">
-                <div id="ztree-left"  class="ztree"></div>
-<!--                style="background: #DDDDDD;"-->
-            </div>
-            <div class="col-9">
-                <pre id="txt-right" style="border-left: 1px solid #DDDDDD;"></pre>
+        <div class="body">
+            <div class="row">
+                <div class="col-3">
+                    <div id="ztree-left" class="ztree"></div>
+                    <!--                style="background: #DDDDDD;"-->
+                </div>
+                <div class="col-9">
+                    <pre id="txt-right" style="border-left: 1px solid #DDDDDD;"></pre>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 <html>
