@@ -46,7 +46,7 @@
                                 item_database_mysql: {
                                     name:'Mysql',
                                     href:'',
-                                    nav_data_path: 'https://raw.githubusercontent.com/lingwh1995/test/gh-pages/mysql.html',
+                                    nav_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/source/db/mysql.json',
                                     content_data_path: './notes/mysql.html',
                                 },
                                 item_database_oracel: {
@@ -118,23 +118,35 @@
                 $('.header .collapse-dev div ul li a').click(function (){
                     const content_data_path = $(this).attr('content_data_path');
                     const nav_data_path = $(this).attr('nav_data_path');
-                    $("#content").load(content_data_path);
-                    $.ajax({
-                        async: true,
-                        url: nav_data_path,
-                        type: 'GET',
-                        success: function (result){
-                            alert();
-                            // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
-                            var setting = {};
-                            var zNodes = result;
-                            console.log(result);
-                            alert(result);
-                            $.fn.zTree.init($("#ztree-left"), setting, zNodes);
-                        }
+                    //alert(nav_data_path);
+                    //$("#content").load(content_data_path);
+                    // $("#content").load("https://raw.githubusercontent.com/lingwh1995/test/gh-pages/mysql.html");
+                    var setting = {};
+                    $.getJSON('./db/mysql.json',function (result){
+                        alert(result);
                     })
+                    // var zNodes = result;
+                    // $.fn.zTree.init($("#ztree-left"), setting, zNodes);
                 });
-                //$("#txt-right").load("https://raw.githubusercontent.com/lingwh1995/test/gh-pages/mysql.html");
+
+                // function render(){
+                //     alert();
+                //     // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+                //     var setting = {};
+                //     $.ajax({
+                //         async: false,
+                //         url: "https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/source/db/mysql.json",
+                //         type: 'GET',
+                //         dataType: 'json',
+                //         success: function (result){
+                //             console.log(result);
+                //             var zNodes = result;
+                //             $.fn.zTree.init($("#ztree-left"), setting, zNodes);
+                //         }
+                //     })
+                // }
+
+               // $("#txt-right").load("https://raw.githubusercontent.com/lingwh1995/test/gh-pages/mysql.html");
                 //$("#content").load("./notes/mysql.html");
         });
 		</script>
