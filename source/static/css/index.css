@@ -1,29 +1,23 @@
 body {
     background: #F3F3F3;
 }
-.container{
-    height: calc(90vh);
-    width: 95%;
-    margin: 50px auto;
+.container-fluid .body .row{
+    height: calc(93vh);
 }
-.nav{
-    background: #DDDDDD;
+.container-fluid .body .col-3{
     height: 100%;
-    width: 20%;
     float: left;
 }
-.content{
-    border: 1px solid #DDDDDD;;
+.container-fluid .body .col-9{
     background: #F3F3F3;
     height: 100%;
-    width: 79%;
-    float: left;
     overflow-y:auto;
     font-size: 22px;
 }
-ul {
-    /*list-style-type: none;*/
-}
+
 .white-space{
     white-space: pre;
+}
+.container-fluid .header {
+    margin-bottom: 5px;
 }
