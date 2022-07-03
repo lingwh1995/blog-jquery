@@ -4,10 +4,6 @@ body {
 .container-fluid .body .row{
     height: calc(93vh);
 }
-.container-fluid .body .col-3{
-    font-size: 24px;
-    height: 100%;
-}
 .container-fluid .body .col-9{
     background: #F3F3F3;
     height: 100%;

@@ -19,15 +19,28 @@
             //         item_home: {
             //             name: 'Home',
             //             href: 'index.html',
+            //             type: 'href',
             //             collapseId: 'collapse_item_home'
             //         },
             //         item_java: {
             //             name: 'JAVA',
             //             collapseId: 'collapse_item_java',
+            //             type: 'href',
             //             navbar2: {
             //                 item_java_spring: {
             //                     name: 'Spring',
             //                     href: '#',
+            //                     bookList: [
+            //                         {
+            //                             name: '1.Spring-1',
+            //                             content_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/notes/mysql.html',
+            //                             nav_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/source/db/mysql.json'
+            //                         },
+            //                         {
+            //                             name: '2.Spring-2',
+            //                             href: '#'
+            //                         },
+            //                     ]
             //                 },
             //                 item_java_springcloud: {
             //                     name: 'SpringCloud',
@@ -42,6 +55,7 @@
             //         item_database: {
             //             name: '数据库',
             //             collapseId: 'collapse_item_database',
+            //             type: 'href',
             //             navbar2: {
             //                 item_database_mysql: {
             //                     name: 'Mysql',
@@ -60,6 +74,7 @@
             //         item_tools: {
             //             name: '工具支持',
             //             collapseId: 'collapse_item_tools',
+            //             type: 'href',
             //             navbar2: {
             //                 item_tools_idea: {
             //                     name: 'idea',
@@ -70,6 +85,12 @@
             //                     href: '#',
             //                 }
             //             }
+            //         },
+            //         item_toggle_booklist: {
+            //             name: '隐藏书籍目录',
+            //             collapseId: 'item_toggle_booklist',
+            //             type: 'button',
+            //             style: 'margin-left:50px'
             //         }
             //     }
             // };
@@ -93,12 +114,20 @@
             function renderNavbar() {
                 const navbar1 = config.navbar1;
                 for (const key_navbar1 in navbar1) {
-                    let li =
-                        `<li class="nav-item">
+                    console.log();
+                    let li = '';
+                    if(navbar1[key_navbar1].type == 'href') {
+                        li = `<li class="nav-item">
                                     <a class="nav-link ${key_navbar1}" data-toggle="collapse" href="#${navbar1[key_navbar1].collapseId}">
                                         ${navbar1[key_navbar1].name}
                                     </a>
                                  </li>`;
+                    }
+                    if(navbar1[key_navbar1].type == 'button') {
+                        li = `<li class="nav-item">
+                                   <button id="toggle-book-list" type="button" style="${navbar1[key_navbar1].style}" class="btn btn-dark">${navbar1[key_navbar1].name}</button>
+                                 </li>`;
+                    }
                     $(".header .navbar-first-level ul").append(li);
                     const navbar2 = navbar1[key_navbar1].navbar2;
                     if (navbar2 !== undefined) {
@@ -123,7 +152,6 @@
                         $('.header .collapse-div').append(collapse);
                     }
                 }
-                $(".header .navbar-first-level ul li a").eq(0).addClass('active');
             }
 
             /**
@@ -139,8 +167,20 @@
                 if(collapseId.toLowerCase().indexOf('home') != -1){
                     hiedeSecondLevelBar();
                 }
+                //添加active效果
+                var $firstLevelLinks = $('.header .navbar-first-level ul li a');
+                for(let i=0; i<$firstLevelLinks.length; i++){
+                    if($($firstLevelLinks[i]).attr('href') != collapseId){
+                        $($firstLevelLinks[i]).removeClass('active');
+                    }
+                }
 
+                $(this).addClass('active');
+                $(this).siblings().removeClass('active');
+                //隐藏 展开/隐藏书籍目录 按钮
+                $('#toggle-book-list').hide();
             });
+
             $('#blog').click(function (){
                 hiedeSecondLevelBar();
             });
@@ -161,30 +201,50 @@
 
             //记录上一个点击的锚点的
             let prevClickanchorPoint = '1dot';
-            //二级导航条点击事件
+            /**
+             * 二级导航条点击事件
+             */
             $('.header .collapse-div div ul li a').click(function () {
+                //添加active效果
+                var $secondLevelLinks = $('.header .collapse-div div ul li a');
+                for(let i=0; i<$secondLevelLinks.length; i++){
+                    if($($secondLevelLinks[i]).attr('navlevel1id') == $(this).attr('navlevel1id')){
+                        if($($secondLevelLinks[i]).attr('navlevel2id') != $(this).attr('navlevel2id')){
+                            $($secondLevelLinks[i]).removeClass('active');
+                        }else{
+                            $($secondLevelLinks[i]).addClass('active');
+                        }
+                    }
+                }
                 $('.container-fluid .jumbotron').hide();
                 $('.container-fluid .body').show();
                 const content_data_path = $(this).attr('content_data_path');
-                $("#txt-right").load(content_data_path);
+                //$("#txt-right").load(content_data_path);
                 const nav_data_path = $(this).attr('nav_data_path');
                 //renderZtree(nav_data_path);
                 const setting = {
                     callback: {
-                        onClick: zTreeOnClick1
+                        onClick: zTreeOnClickBooKList
                     },
+                    view: {
+                        showIcon: false,
+                    }
                 };
                 const navLevel1Id = $(this).attr('navLevel1Id');
                 const navLevel2Id = $(this).attr('navLevel2Id');
-                console.log(config.navbar1[navLevel1Id].navbar2.children);
+                const navBar2s = config.navbar1[navLevel1Id].navbar2;
+                const children = [];
+                for(const key in navBar2s){
+                    //console.log(navBar2s[key].bookList);
+                    children.push({name:navBar2s[key].name,children:navBar2s[key].bookList});
+                }
                 var zNodes = [
                     {name: $(this).text(), navLevel1Id:navLevel1Id,
-                        navLevel2Id:navLevel2Id,children: [
-                            {name: "Mysql"},
-                            {name: "Oracel"}
-                        ]}
+                        navLevel2Id:navLevel2Id,children: children}
                 ];
-                $.fn.zTree.init($("#ztree-left"), setting, zNodes);
+                $.fn.zTree.init($("#ztree-left-booklist"), setting, zNodes);
+                //显示 展开/隐藏书籍目录 按钮
+                $('#toggle-book-list').show();
             });
 
             /**
@@ -194,7 +254,7 @@
             function renderZtree(nav_data_path) {
                 const setting = {
                     callback: {
-                        onClick: zTreeOnClick
+                        onClick: zTreeOnClickBook
                     },
                     view: {
                         showIcon: false,
@@ -220,7 +280,7 @@
              * @param treeNode
              * @param clickFlag
              */
-            function zTreeOnClick(event, treeId, treeNode, clickFlag){
+            function zTreeOnClickBook(event, treeId, treeNode, clickFlag){
                 //点击之前首先清除上一个锚点的背景色
                 $('#'+prevClickanchorPoint).css('background','#F3F3F3')
                 const anchorPoint =treeNode.navMenuItemId;
@@ -237,10 +297,47 @@
              * @param treeNode
              * @param clickFlag
              */
-            function zTreeOnClick1(event, treeId, treeNode, clickFlag){
-                console.log(treeNode);
+            function zTreeOnClickBooKList(event, treeId, treeNode, clickFlag){
+                const setting = {
+                    callback: {
+                        onClick: zTreeOnClickBook
+                    },
+                    view: {
+                        showIcon: false,
+                    }
+                };
+
+                $.ajax({
+                    async: false,
+                    url: treeNode.nav_data_path,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (result) {
+                        const zNodes = result;
+                        $.fn.zTree.init($("#ztree-left-book"), setting, zNodes);
+                    }
+                })
+                $("#txt-right").load(treeNode.content_data_path);
+                treeNode.isHidden = true;
             }
             $('.container-fluid .body').hide();
+
+            /**
+             * 点击展开或者隐藏书籍目录
+             */
+            $('#toggle-book-list').click(function (){
+                $('#ztree-left-booklist-col').toggle();
+                if($('#ztree-left-booklist-col').attr('style') != ''){
+                    $('#ztree-left-book-col').removeClass('col-2').addClass('col-3');
+                    $('#toggle-book-list').text('显示书籍目录');
+                }else{
+                    $('#ztree-left-book-col').removeClass('col-3').addClass('col-2');
+                    $('#toggle-book-list').text('隐藏书籍目录');
+                }
+            });
+
+            //显示 展开/隐藏书籍目录 按钮
+            $('#toggle-book-list').hide();
         });
     </script>
 
@@ -264,8 +361,11 @@
         <div class="h10"></div>
         <div class="body">
             <div class="row">
-                <div class="col-3">
-                    <div id="ztree-left" class="ztree" style="background: #DDDDDD;"></div>
+                <div class="col-1" id="ztree-left-booklist-col">
+                    <div id="ztree-left-booklist" class="ztree" style="background: #DDDDDD;"></div>
+                </div>
+                <div class="col-2" id="ztree-left-book-col">
+                    <div id="ztree-left-book" class="ztree" style="background: #DDDDDD;"></div>
                 </div>
                 <div class="col-9">
                     <pre id="txt-right" style="border-left: 1px solid #DDDDDD;height: calc(85vh);"></pre>
@@ -273,7 +373,6 @@
             </div>
         </div>
         <div class="jumbotron" style="height: 88%;margin-top: 10px;">
-            <input type="hidden" value="show" id="jumbotron_state"/>
             <div style="text-align: center;height: 15%">
                 <h1 class="display-4">Hello, Friend!</h1>
                 <p class="lead">有朋自远方来,不亦乐乎！</p>
