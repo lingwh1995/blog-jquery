@@ -675,12 +675,12 @@
 	列：xx
 	表：xx
 	条件：xx
-	1.列出所有员工的姓名及其直接上级的姓名
+<span class=".white-space" id='21dot1&gt;dot'>	1>.列出所有员工的姓名及其直接上级的姓名</span>
 	列：e.ename,m.ename
 	表：emp e,emp m
 	条件：e.mgr=m.empno
 	select e.empno, e.ename,m.empno ,m.ename from emp e,emp m where e.mgr=m.empno order by 1 asc;
-	2.查询出受雇日期早于直接上级的所有员工的编号、姓名、部门名称
+<span class=".white-space" id='21dot2&gt;dot'>	2>.查询出受雇日期早于直接上级的所有员工的编号、姓名、部门名称</span>
 	分析方法：
 	列：e.epmno、e.ename、d.dname
 	表：emp e、dept d、emp m
@@ -699,7 +699,7 @@
 	select e.hiredate ,m.hiredate ,e.ename,m.ename
 	from emp e,emp m,dept d
 	where e.mgr = m.empno and e.hiredate<m.hiredate and e.deptno=d.deptno;
-	3.列出薪金高于公司平均薪金的所有员工信息，所在部门名称，上级领导，工资等级
+<span class=".white-space" id='21dot3&gt;dot'>	3>.列出薪金高于公司平均薪金的所有员工信息，所在部门名称，上级领导，工资等级</span>
 	select
 	from
 	where
