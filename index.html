@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="./source/lib/bootstrap-4.6.1/css/bootstrap.css"/>
     <!--导入bootstrap的js-->
     <script type="text/javascript" src="./source/lib/bootstrap-4.6.1/js/bootstrap.js"></script>
-    <link rel="stylesheet" type="text/css" href="./source/static/css/index.css">
+    <link rel="stylesheet" type="text/css" href="./source/static/css/index1.css">
     <!--导入ztree的css-->
     <link rel="stylesheet" type="text/css" href="source/lib/ztree.-3.5/css/zTreeStyle/zTreeStyle.css">
     <!--导入ztree的js-->
@@ -14,69 +14,82 @@
     <title>BLOG_LINGWH</title>
     <script>
         $(function () {
-            var config = {
-                navbar1: {
-                    item_home: {
-                        name: 'Home',
-                        href: '#asfda',
-                        collapseId: 'collapse_item_home'
-                    },
-                    item_java: {
-                        name: 'JAVA',
-                        collapseId: 'collapse_item_java',
-                        navbar2: {
-                            item_java_spring: {
-                                name: 'Spring',
-                                href: '#',
-                            },
-                            item_java_springcloud: {
-                                name: 'SpringCloud',
-                                href: '#',
-                            },
-                            item_java_springboot: {
-                                name: 'SpringBoot',
-                                href: '#',
-                            }
-                        }
-                    },
-                    item_database: {
-                        name: '数据库',
-                        collapseId: 'collapse_item_database',
-                        navbar2: {
-                            item_database_mysql: {
-                                name: 'Mysql',
-                                href: '#',
-                                content_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/notes/mysql.html',
-                                nav_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/source/db/mysql.json'
-                            },
-                            item_database_oracel: {
-                                name: 'Oracle',
-                                href: '#',
-                                content_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/notes/oracle.html',
-                                nav_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/source/db/oracle.json'
-                            }
-                        }
-                    },
-                    item_tools: {
-                        name: '工具支持',
-                        collapseId: 'collapse_item_tools',
-                        navbar2: {
-                            item_tools_idea: {
-                                name: 'idea',
-                                href: '#',
-                            },
-                            item_tool_eclipse: {
-                                name: 'eclipse',
-                                href: '#',
-                            }
-                        }
-                    }
-                }
-            };
+            // var config = {
+            //     navbar1: {
+            //         item_home: {
+            //             name: 'Home',
+            //             href: 'index.html',
+            //             collapseId: 'collapse_item_home'
+            //         },
+            //         item_java: {
+            //             name: 'JAVA',
+            //             collapseId: 'collapse_item_java',
+            //             navbar2: {
+            //                 item_java_spring: {
+            //                     name: 'Spring',
+            //                     href: '#',
+            //                 },
+            //                 item_java_springcloud: {
+            //                     name: 'SpringCloud',
+            //                     href: '#',
+            //                 },
+            //                 item_java_springboot: {
+            //                     name: 'SpringBoot',
+            //                     href: '#',
+            //                 }
+            //             }
+            //         },
+            //         item_database: {
+            //             name: '数据库',
+            //             collapseId: 'collapse_item_database',
+            //             navbar2: {
+            //                 item_database_mysql: {
+            //                     name: 'Mysql',
+            //                     href: '#',
+            //                     content_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/notes/mysql.html',
+            //                     nav_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/source/db/mysql.json'
+            //                 },
+            //                 item_database_oracel: {
+            //                     name: 'Oracle',
+            //                     href: '#',
+            //                     content_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/notes/oracle.html',
+            //                     nav_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/source/db/oracle.json'
+            //                 }
+            //             }
+            //         },
+            //         item_tools: {
+            //             name: '工具支持',
+            //             collapseId: 'collapse_item_tools',
+            //             navbar2: {
+            //                 item_tools_idea: {
+            //                     name: 'idea',
+            //                     href: '#',
+            //                 },
+            //                 item_tool_eclipse: {
+            //                     name: 'eclipse',
+            //                     href: '#',
+            //                 }
+            //             }
+            //         }
+            //     }
+            // };
+            // console.log(JSON.stringify(config));
 
+            $.ajax({
+                async: false,
+                url: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/source/conf/conf.json',
+                type: 'get',
+                dataType: 'json',
+                success: function (result) {
+                    console.log(result);
+                }
+            })
+            var config =
             renderNavbar();
 
-            //渲染一级、二级...导航栏样式
+            /**
+             * 渲染一级、二级...导航栏样式
+             */
             function renderNavbar() {
                 const navbar1 = config.navbar1;
                 for (const key_navbar1 in navbar1) {
@@ -113,8 +126,21 @@
                 $(".header .navbar-first-level ul li a").eq(0).addClass('active');
             }
 
-            //给一级、二级...导航栏添加初始点击事件
+            /**
+             * 给一级添加初始点击事件
+             */
             $('.header .navbar-first-level ul li a').click(function () {
+                $('.container-fluid .body').hide();
+                const itemName = $(this).text();
+                //跳转到首页,并显示首页
+                if(itemName.toLowerCase().trim() == 'home'){
+                    $('.container-fluid .jumbotron').show();
+                    //$('.container-fluid .body').hide();
+                }else{//隐藏首页
+                    //$('.container-fluid .jumbotron').hide();
+                   //
+                }
+
                 const collapseId = $(this).attr('href');
                 $(collapseId).siblings().removeClass('show');
             });
@@ -122,15 +148,31 @@
             //给homePageButton添加超链接
             //$homePageButton.attr('href',config.navbar.first_level.item_home.href);
 
+            //记录上一个点击的锚点的
+            let prevClickanchorPoint = '1dot';
             //二级导航条点击事件
             $('.header .collapse-div div ul li a').click(function () {
                 const content_data_path = $(this).attr('content_data_path');
-                $("#txt-right").load(content_data_path);
+                $("#txt-right").load(content_data_path,function (result){
+                    if(result != undefined) {
+                        $('.container-fluid .body').show();
+                    }
+                });
                 const nav_data_path = $(this).attr('nav_data_path');
-                //var setting = {};
+                renderZtree(nav_data_path);
+            });
+
+            /**
+             * 渲染ztreee
+             * @param nav_data_path
+             */
+            function renderZtree(nav_data_path) {
                 var setting = {
                     callback: {
                         onClick: zTreeOnClick
+                    },
+                    view:{
+                        showIcon: false,
                     }
                 };
 
@@ -138,36 +180,31 @@
                     async: false,
                     url: nav_data_path,
                     type: 'GET',
-                    global: false,
                     dataType: 'json',
                     success: function (result) {
                         var zNodes = result;
                         $.fn.zTree.init($("#ztree-left"), setting, zNodes);
                     }
                 })
-            });
+            }
 
+            /**
+             * ztree单击事件
+             * @param event
+             * @param treeId
+             * @param treeNode
+             * @param clickFlag
+             */
             function zTreeOnClick(event, treeId, treeNode, clickFlag){
+                //点击之前首先清除上一个锚点的背景色
+                $('#'+prevClickanchorPoint).css('background','#F3F3F3')
                 const anchorPoint =treeNode.navMenuItemId;
                 //锚点跳跃
                 location.hash = anchorPoint;
-                alert($('#'+anchorPoint).html());
-                console.log(treeNode.navMenuItemId);
-                //var treeObj = $.fn.zTree.getZTreeObj("ztree");
-                //console.log(treeObj);
-                // 获取当前勾选数据的值
-                //var checkNodes = treeObj.getCheckedNodes(true);
-                // 获取当前选中数据的值
-                // var nodes = treeObj.getSelectedNodes();
-                // for (var i=0; i < nodes.length; i++) {
-                //     if(checkNodes.length > 0 && nodes.length > 0 && nodes[i].id == checkNodes[i].id){
-                //         treeObj.checkNode(nodes[i], false, true);//取消勾选
-                //     }else{
-                //         treeObj.checkNode(nodes[i], true, true);//勾选
-                //     }
-                // }
+                //给关键字设置背景色
+                $('#'+anchorPoint).css('background','yellow')
+                prevClickanchorPoint = anchorPoint;
             }
-
         });
     </script>
 
@@ -195,7 +232,57 @@
                     <!--                style="background: #DDDDDD;"-->
                 </div>
                 <div class="col-9">
-                    <pre id="txt-right" style="border-left: 1px solid #DDDDDD;"></pre>
+                    <pre id="txt-right" ></pre>
+<!--                    style="border-left: 1px solid #DDDDDD;"-->
+                </div>
+            </div>
+        </div>
+        <div class="jumbotron" style="height: 88%;margin-top: 10px;">
+            <div style="text-align: center;height: 15%">
+                <h1 class="display-4">Hello, Friend!</h1>
+                <p class="lead">有朋自远方来,不亦乐乎！</p>
+            </div>
+            <hr class="my-4">
+            <div style="height: 53%">
+                <pre>
+                        <h5>
+                        Java简介：
+                            1.Java是一门面向对象的编程语言，1996年1月，Sun公司发布了Java的第一个开发工具包。
+                            2.Java不仅吸收了C++语言的各种优点，还摒弃了C++里难以理解的多继承、指针等概念，因此Java语言具有功能强大和简单易用两个特征。
+                            3.Java作为静态面向对象编程语言的代表，极好地实现了面向对象理论，允许程序员以优雅的思维方式进行复杂的编程。
+                            4.Java可以编写桌面应用程序、Web应用程序、分布式系统和嵌入式系统应用程序等。
+                            5.Java是一种开源的语言，有强大的社区力量和广泛的开发人员支持，并且在此基础上建立了完善的生态系统。
+
+                        示例代码:
+                            public class Hello {
+                                public static void main(String[] args) {
+                                    System.out.println("Hello World!");
+                                }
+                            }
+                        </h5>
+                </pre>
+            </div>
+            <hr class="my-4">
+            <div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="card" style="text-align: center">
+                            <div class="card-body">
+                                <h5 class="card-title">GITHUB</h5>
+                                <p class="card-text">一个开源代码的自由世界</p>
+                                <a class="btn btn-primary btn-lg" href="https://github.com/lingwh1995" target="_blank">传送门</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card" style="text-align: center">
+                            <div class="card-body">
+                                <h5 class="card-title">GITEE</h5>
+                                <p class="card-text">一个开放源代码的自由世界（国内版）</p>
+                                <a class="btn btn-info btn-lg" href="https://gitee.com/lingwh1995" target="_blank">传送门</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
