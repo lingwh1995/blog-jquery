@@ -14,97 +14,97 @@
     <title>BLOG_LINGWH</title>
     <script>
         $(function () {
-            // var config = {
-            //     navbar1: {
-            //         item_home: {
-            //             name: 'Home',
-            //             href: 'index.html',
-            //             type: 'href',
-            //             collapseId: 'collapse_item_home'
-            //         },
-            //         item_java: {
-            //             name: 'JAVA',
-            //             collapseId: 'collapse_item_java',
-            //             type: 'href',
-            //             navbar2: {
-            //                 item_java_spring: {
-            //                     name: 'Spring',
-            //                     href: '#',
-            //                     bookList: [
-            //                         {
-            //                             name: '1.Spring-1',
-            //                             content_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/notes/mysql.html',
-            //                             nav_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/source/db/mysql.json'
-            //                         },
-            //                         {
-            //                             name: '2.Spring-2',
-            //                             href: '#'
-            //                         },
-            //                     ]
-            //                 },
-            //                 item_java_springcloud: {
-            //                     name: 'SpringCloud',
-            //                     href: '#',
-            //                 },
-            //                 item_java_springboot: {
-            //                     name: 'SpringBoot',
-            //                     href: '#',
-            //                 }
-            //             }
-            //         },
-            //         item_database: {
-            //             name: '数据库',
-            //             collapseId: 'collapse_item_database',
-            //             type: 'href',
-            //             navbar2: {
-            //                 item_database_mysql: {
-            //                     name: 'Mysql',
-            //                     href: '#',
-            //                     content_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/notes/mysql.html',
-            //                     nav_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/source/db/mysql.json'
-            //                 },
-            //                 item_database_oracel: {
-            //                     name: 'Oracle',
-            //                     href: '#',
-            //                     content_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/notes/oracle.html',
-            //                     nav_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/source/db/oracle.json'
-            //                 }
-            //             }
-            //         },
-            //         item_tools: {
-            //             name: '工具支持',
-            //             collapseId: 'collapse_item_tools',
-            //             type: 'href',
-            //             navbar2: {
-            //                 item_tools_idea: {
-            //                     name: 'idea',
-            //                     href: '#',
-            //                 },
-            //                 item_tool_eclipse: {
-            //                     name: 'eclipse',
-            //                     href: '#',
-            //                 }
-            //             }
-            //         },
-            //         item_toggle_booklist: {
-            //             name: '隐藏书籍目录',
-            //             collapseId: 'item_toggle_booklist',
-            //             type: 'button',
-            //             style: 'margin-left:50px'
-            //         }
-            //     }
-            // };
-            // console.log(JSON.stringify(config));
-            let config;
-            $.ajax({
-                async: false,
-                url: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/source/conf/conf.json',
-                type: 'get',
-                dataType: 'json',
-                success: function (result) {
-                    config = result;
+            var config = {
+                navbar1: {
+                    item_home: {
+                        name: 'Home',
+                        href: 'index.html',
+                        type: 'href',
+                        collapseId: 'collapse_item_home',
+                    },
+                    item_java: {
+                        name: 'JAVA',
+                        collapseId: 'collapse_item_java',
+                        type: 'href',
+                        navbar2: {
+                            item_java_spring: {
+                                name: 'Spring',
+                                href: '#',
+                                bookList: [
+                                    {
+                                        name: '1.Spring-1',
+                                        content_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/notes/mysql.html',
+                                        nav_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/source/db/mysql.json'
+                                    },
+                                    {
+                                        name: '2.Spring-2',
+                                        href: '#'
+                                    },
+                                ]
+                            },
+                            item_java_springcloud: {
+                                name: 'SpringCloud',
+                                href: '#',
+                            },
+                            item_java_springboot: {
+                                name: 'SpringBoot',
+                                href: '#',
+                            }
+                        }
+                    },
+                    item_database: {
+                        name: '数据库',
+                        collapseId: 'collapse_item_database',
+                        type: 'href',
+                        navbar2: {
+                            item_database_mysql: {
+                                name: 'Mysql',
+                                href: '#',
+                                content_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/notes/mysql.html',
+                                nav_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/source/db/mysql.json'
+                            },
+                            item_database_oracel: {
+                                name: 'Oracle',
+                                href: '#',
+                                content_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/notes/oracle.html',
+                                nav_data_path: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/source/db/oracle.json'
+                            }
+                        }
+                    },
+                    item_tools: {
+                        name: '工具支持',
+                        collapseId: 'collapse_item_tools',
+                        type: 'href',
+                        navbar2: {
+                            item_tools_idea: {
+                                name: 'idea',
+                                href: '#',
+                            },
+                            item_tool_eclipse: {
+                                name: 'eclipse',
+                                href: '#',
+                            }
+                        }
+                    },
+                    item_toggle_booklist: {
+                        name: '隐藏书籍目录',
+                        collapseId: 'item_toggle_booklist',
+                        type: 'button',
+                        style: 'margin-left:50px'
+                    }
                 }
-            });
+            };
+            console.log(JSON.stringify(config));
+            // let config;
+            // $.ajax({
+            //     async: false,
+            //     url: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/source/conf/conf.json',
+            //     type: 'get',
+            //     dataType: 'json',
+            //     success: function (result) {
+            //         config = result;
+            //     }
+            // });
 
             renderNavbar();
 
