@@ -105,7 +105,7 @@
                         let navbar2lis = '';
                          for(const key_navbar2 in navbar2) {
                             navbar2lis += `<li className="nav-item">
-                                         <a class="nav-link" nav_data_path="${navbar2[key_navbar2].nav_data_path}" content_data_path="${navbar2[key_navbar2].content_data_path}" href="${navbar2[key_navbar2].href}">${navbar2[key_navbar2].name}</a>
+                                         <a class="nav-link" navLevel1Id="${key_navbar1}" navLevel2Id="${key_navbar2}" nav_data_path="${navbar2[key_navbar2].nav_data_path}" content_data_path="${navbar2[key_navbar2].content_data_path}" href="${navbar2[key_navbar2].href}">${navbar2[key_navbar2].name}</a>
                                        </li>`;
                         }
                         let collapse =
@@ -168,7 +168,23 @@
                 const content_data_path = $(this).attr('content_data_path');
                 $("#txt-right").load(content_data_path);
                 const nav_data_path = $(this).attr('nav_data_path');
-                renderZtree(nav_data_path);
+                //renderZtree(nav_data_path);
+                const setting = {
+                    callback: {
+                        onClick: zTreeOnClick1
+                    },
+                };
+                const navLevel1Id = $(this).attr('navLevel1Id');
+                const navLevel2Id = $(this).attr('navLevel2Id');
+                console.log(config.navbar1[navLevel1Id].navbar2.children);
+                var zNodes = [
+                    {name: $(this).text(), navLevel1Id:navLevel1Id,
+                        navLevel2Id:navLevel2Id,children: [
+                            {name: "Mysql"},
+                            {name: "Oracel"}
+                        ]}
+                ];
+                $.fn.zTree.init($("#ztree-left"), setting, zNodes);
             });
 
             /**
@@ -176,11 +192,11 @@
              * @param nav_data_path
              */
             function renderZtree(nav_data_path) {
-                var setting = {
+                const setting = {
                     callback: {
                         onClick: zTreeOnClick
                     },
-                    view:{
+                    view: {
                         showIcon: false,
                     }
                 };
@@ -191,7 +207,7 @@
                     type: 'GET',
                     dataType: 'json',
                     success: function (result) {
-                        var zNodes = result;
+                        const zNodes = result;
                         $.fn.zTree.init($("#ztree-left"), setting, zNodes);
                     }
                 })
@@ -213,6 +229,16 @@
                 //给关键字设置背景色
                 $('#'+anchorPoint).css('background','yellow')
                 prevClickanchorPoint = anchorPoint;
+            }
+            /**
+             * ztree单击事件
+             * @param event
+             * @param treeId
+             * @param treeNode
+             * @param clickFlag
+             */
+            function zTreeOnClick1(event, treeId, treeNode, clickFlag){
+                console.log(treeNode);
             }
             $('.container-fluid .body').hide();
         });
