@@ -5,19 +5,15 @@ body {
     height: calc(93vh);
 }
 .container-fluid .body .col-3{
+    font-size: 24px;
     height: 100%;
-    float: left;
 }
 .container-fluid .body .col-9{
     background: #F3F3F3;
     height: 100%;
     overflow-y:auto;
-    font-size: 22px;
+    font-size: 24px;
 }
-
-.white-space{
-    white-space: pre;
-}
-.container-fluid .header {
-   /* margin-bottom: 5px;*/
+.h10 {
+    height: 10px;
 }

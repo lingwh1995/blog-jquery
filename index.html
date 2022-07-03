@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="./source/lib/bootstrap-4.6.1/css/bootstrap.css"/>
     <!--导入bootstrap的js-->
     <script type="text/javascript" src="./source/lib/bootstrap-4.6.1/js/bootstrap.js"></script>
-    <link rel="stylesheet" type="text/css" href="./source/static/css/index1.css">
+    <link rel="stylesheet" type="text/css" href="./source/static/css/index.css">
     <!--导入ztree的css-->
     <link rel="stylesheet" type="text/css" href="source/lib/ztree.-3.5/css/zTreeStyle/zTreeStyle.css">
     <!--导入ztree的js-->
@@ -74,17 +74,17 @@
             //     }
             // };
             // console.log(JSON.stringify(config));
-
+            let config;
             $.ajax({
                 async: false,
                 url: 'https://raw.githubusercontent.com/lingwh1995/blog/gh-pages/source/conf/conf.json',
                 type: 'get',
                 dataType: 'json',
                 success: function (result) {
-                    console.log(result);
+                    config = result;
                 }
-            })
-            var config =
+            });
+
             renderNavbar();
 
             /**
@@ -103,7 +103,7 @@
                     const navbar2 = navbar1[key_navbar1].navbar2;
                     if (navbar2 !== undefined) {
                         let navbar2lis = '';
-                        for (const key_navbar2 in navbar2) {
+                         for(const key_navbar2 in navbar2) {
                             navbar2lis += `<li className="nav-item">
                                          <a class="nav-link" nav_data_path="${navbar2[key_navbar2].nav_data_path}" content_data_path="${navbar2[key_navbar2].content_data_path}" href="${navbar2[key_navbar2].href}">${navbar2[key_navbar2].name}</a>
                                        </li>`;
@@ -130,21 +130,32 @@
              * 给一级添加初始点击事件
              */
             $('.header .navbar-first-level ul li a').click(function () {
-                $('.container-fluid .body').hide();
-                const itemName = $(this).text();
-                //跳转到首页,并显示首页
-                if(itemName.toLowerCase().trim() == 'home'){
-                    $('.container-fluid .jumbotron').show();
-                    //$('.container-fluid .body').hide();
-                }else{//隐藏首页
-                    //$('.container-fluid .jumbotron').hide();
-                   //
-                }
-
                 const collapseId = $(this).attr('href');
                 $(collapseId).siblings().removeClass('show');
-            });
+                if(!$(collapseId).hasClass('show')){
+                    $('.container-fluid .jumbotron').show();
+                    $('.container-fluid .body').hide();
+                }
+                if(collapseId.toLowerCase().indexOf('home') != -1){
+                    hiedeSecondLevelBar();
+                }
 
+            });
+            $('#blog').click(function (){
+                hiedeSecondLevelBar();
+            });
+            $('.container-fluid .body').click(function (){
+                hiedeSecondLevelBar();
+            });
+            /**
+             * 隐藏二级导航
+             */
+            function hiedeSecondLevelBar(){
+                const collapseArr = $('.header .collapse-div').children();
+                for(let i=0; i<collapseArr.length; i++ ){
+                    $(collapseArr[i]).removeClass('show');
+                }
+            }
             //给homePageButton添加超链接
             //$homePageButton.attr('href',config.navbar.first_level.item_home.href);
 
@@ -152,12 +163,10 @@
             let prevClickanchorPoint = '1dot';
             //二级导航条点击事件
             $('.header .collapse-div div ul li a').click(function () {
+                $('.container-fluid .jumbotron').hide();
+                $('.container-fluid .body').show();
                 const content_data_path = $(this).attr('content_data_path');
-                $("#txt-right").load(content_data_path,function (result){
-                    if(result != undefined) {
-                        $('.container-fluid .body').show();
-                    }
-                });
+                $("#txt-right").load(content_data_path);
                 const nav_data_path = $(this).attr('nav_data_path');
                 renderZtree(nav_data_path);
             });
@@ -205,6 +214,7 @@
                 $('#'+anchorPoint).css('background','yellow')
                 prevClickanchorPoint = anchorPoint;
             }
+            $('.container-fluid .body').hide();
         });
     </script>
 
@@ -213,7 +223,7 @@
     <div class="container-fluid">
         <div class="header">
             <div class="navbar navbar-expand-lg navbar-dark bg-primary navbar-first-level">
-                <a class="navbar-brand" href="#">博客</a>
+                <a class="navbar-brand" id="blog" href="#">BLOG</a>
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav mr-auto"></ul>
                     <form class="form-inline my-2 my-lg-0">
@@ -225,19 +235,19 @@
             <div class="collapse-div">
             </div>
         </div>
+        <div class="h10"></div>
         <div class="body">
             <div class="row">
                 <div class="col-3">
-                    <div id="ztree-left" class="ztree"></div>
-                    <!--                style="background: #DDDDDD;"-->
+                    <div id="ztree-left" class="ztree" style="background: #DDDDDD;"></div>
                 </div>
                 <div class="col-9">
-                    <pre id="txt-right" ></pre>
-<!--                    style="border-left: 1px solid #DDDDDD;"-->
+                    <pre id="txt-right" style="border-left: 1px solid #DDDDDD;height: calc(85vh);"></pre>
                 </div>
             </div>
         </div>
         <div class="jumbotron" style="height: 88%;margin-top: 10px;">
+            <input type="hidden" value="show" id="jumbotron_state"/>
             <div style="text-align: center;height: 15%">
                 <h1 class="display-4">Hello, Friend!</h1>
                 <p class="lead">有朋自远方来,不亦乐乎！</p>
