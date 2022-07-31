@@ -1,7 +1,7 @@
 git:
   uri:
-    github: https://github.com/lingwh1995/blog.git
-    gitee: https://github.com/lingwh1995/blog.git1111
+    github: https://github.com/lingwh1995/blog-jquery.git
+    gitee: https://gitee.com/lingwh1995/blog-jquery.git
   token:
     github:
       username: access for gitee
